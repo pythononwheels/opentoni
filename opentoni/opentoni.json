@@ -1,0 +1,63 @@
+{
+    "179"   :   {
+        "type" : "random",
+        "path" : "feuerwehrmann_sam",
+        "info" : "Feuerwehrmann Sam Hörspiele"
+    },
+    "92"   :   {
+        "type" : "random",
+        "path" : "mark_foster",
+        "info" : "Mark Foster songs"
+    },
+    "100"   :   {
+        "type" : "random",
+        "path" : "findet_dorie",
+        "info" : ""
+    },
+    "242"   :   {
+        "type" : "random",
+        "path" : "cars",
+        "info" : ""
+    },
+    "87"   :   {
+        "type" : "random",
+        "path" : "die_drei_fragezeichen_kids",
+        "info" : ""
+    },
+    "189"   :   {
+        "type" : "random",
+        "path" : "der_kleine_vampir",
+        "info" : ""
+    },
+    "173"   :   {
+        "type" : "random",
+        "path" : "yakari",
+        "info" : ""
+    },
+    "142"   :   {
+        "type" : "random",
+        "path" : "bibi_blocksberg",
+        "info" : ""
+    },
+    "243"   :   {
+        "type" : "random",
+        "path" : "nieke",
+        "info" : "Janiekes Musik"
+    },
+    "98"   :   {
+        "type" : "random",
+        "path" : "hoerspiele",
+        "info" : "Gemischte Hörspiele"
+    },
+    "49"   :   {
+        "type" : "random",
+        "path" : "benjamin_bluemchen",
+        "info" : ""
+    },
+    "62"   :   {
+        "type" : "random",
+        "path" : "meck",
+        "info" : "Mecks songs"
+    }
+
+}
