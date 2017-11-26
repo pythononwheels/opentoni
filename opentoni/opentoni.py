@@ -6,11 +6,23 @@ import MFRC522
 import signal
 import os, time
 from subprocess import Popen, PIPE, STDOUT, call
-from random import randint
+import random
 import json
 
 
+#class MyRand(object):
+#    def __init__(self):
+#        self.last = None
+#    def __call__(self, start=0,end=10 ):
+#        r = random.randint(start, end)
+#        while r == self.last:
+#            r = random.randint(0, end)
+#        self.last = r
+#        return r
+
+#randint = MyRand()
 continue_reading = True
+FNULL=FNULL = open(os.devnull, 'w')
 
 # Capture SIGINT for cleanup when the script is aborted
 def end_read(signal,frame):
@@ -33,7 +45,7 @@ playing=False
 current_uid=0
 status2count=0
 last_status=2
-last_rand = None
+last_rand = 1
 
 MUSICDIR="/home/pi/music/"
 
@@ -59,24 +71,31 @@ def say_songname(path):
     call(["espeak", "-v", "de", messages["song_pre"]])
     call(["espeak", "-v", "de", get_song_from_path(path)])
 
-def play_random(path):
+def play_random(path, last_rand):
     songlist = []
     for file in os.listdir(MUSICDIR+path):
         if file.endswith(".mp3"):
             songlist.append(os.path.join(MUSICDIR+path, file))
-        songnum = randint(0,len(songlist)-1)
-        for idx,elem in enumerate(songlist):
-            print str(idx) + " : " + elem
-        #print str(songlist)
-        #print "randonly chosen song number: " + str(songnum)
-        print " ........ " + str(songlist[songnum])
-        openstr = songlist[songnum]
-        #print "trying to play: " + openstr
-        #if music:
-        #    music.terminate()
-        #music = Popen(["mpg321", "-R", "opentoni"], stdin=PIPE)
-        #music.stdin.write("LOAD " + openstr)
-        return openstr
+    if len(songlist) >1:
+        r = random.randint(0, len(songlist)-1)
+        while r == last_rand:
+            r = random.randint(0, len(songlist)-1)
+        songnum = r
+    else:
+        print "len songlist <=1"
+        songnum = 0
+    for idx,elem in enumerate(songlist):
+        print str(idx) + " : " + elem
+    #print str(songlist)
+    print "randonly chosen song number: " + str(songnum)
+    print " ........ " + str(songlist[songnum])
+    openstr = songlist[songnum]
+    #print "trying to play: " + openstr
+    #if music:
+    #    music.terminate()
+    #music = Popen(["mpg321", "-R", "opentoni"], stdin=PIPE)
+    #music.stdin.write("LOAD " + openstr)
+    return openstr,songnum
 
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
 while continue_reading:
@@ -99,9 +118,10 @@ while continue_reading:
         if playing == False:
             for elem in data:
                 if uid[0] == int(elem):
-                    songpath = play_random(data[elem]["path"])
+                    songpath, last_rand = play_random(data[elem]["path"], last_rand)
+                    print "last_rand:" + str(last_rand)
                     say_songname(songpath)
-                    music = Popen(["mpg321", "-R", "opentoni"], stdin=PIPE)
+                    music = Popen(["mpg321", "-q", "-R", "opentoni"], stdin=PIPE, stdout=FNULL)
                     music.stdin.write("LOAD " + songpath)
             #if uid[0]==98:
             #    songpath = play_random("/nieke")
