@@ -9,18 +9,6 @@ from subprocess import Popen, PIPE, STDOUT, call
 import random
 import json
 
-
-#class MyRand(object):
-#    def __init__(self):
-#        self.last = None
-#    def __call__(self, start=0,end=10 ):
-#        r = random.randint(start, end)
-#        while r == self.last:
-#            r = random.randint(0, end)
-#        self.last = r
-#        return r
-
-#randint = MyRand()
 continue_reading = True
 FNULL=FNULL = open(os.devnull, 'w')
 
