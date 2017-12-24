@@ -1,6 +1,6 @@
 {
     "voice"     :  "de",
-    "welcome"   :  ["Hallo Liesi und Nieke", "Ich bin Opentoni"],
+    "welcome"   :  ["Hallo Jesse", "Ich bin Opentoni"],
     "skip_intro" : false,
     "intro"     :  ["Stelle eine Figur auf mich. Und ich spiele Musik"],
     "song_pre"  :  "Der nächste song heisst"

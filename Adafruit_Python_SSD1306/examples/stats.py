@@ -101,6 +101,12 @@ font = ImageFont.load_default()
 # Alternatively load a TTF font.  Make sure the .ttf font file is in the same directory as the python script!
 # Some other nice fonts to try: http://www.dafont.com/bitmap.php
 # font = ImageFont.truetype('Minecraftia.ttf', 8)
+import datetime
+import os
+def getCPUtemperature():
+    res = os.popen('vcgencmd measure_temp').readline()
+    return(res.replace("temp=","").replace("'C\n",""))
+
 
 while True:
 
@@ -118,12 +124,13 @@ while True:
     Disk = subprocess.check_output(cmd, shell = True )
 
     # Write two lines of text.
-    draw.text((x, top),     "Welcome to OpenToni:", font=font, fill=255)
-    draw.text((x, top+24),       "IP: " + str(IP),  font=font, fill=255)
-    draw.text((x, top+32),   "Your free MP3 Space:",  font=font, fill=255)
+    draw.text((x, top),      "Welcome to OpenToni:", font=font, fill=255)
+    draw.text((x, top+24),   "IP: " + str(IP),  font=font, fill=255)
+    draw.text((x, top+32),   "Temperatur: " + getCPUtemperature(),  font=font, fill=255)
+    draw.text((x, top+40),   "Uhrzeit: " + datetime.datetime.now().strftime("%H:%M"),  font=font, fill=255)
     draw.text((x, top+48),    str(Disk),  font=font, fill=255)
 
     # Display image.
     disp.image(image)
     disp.display()
-    time.sleep(10)
+    time.sleep(30)

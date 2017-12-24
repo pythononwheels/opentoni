@@ -1,6 +1,8 @@
 #!/bin/sh
 sleep 10
-cd /home/pi/Adafruit_Python_SSD1306/examples
+cd /home/pi/opentoni/Adafruit_Python_SSD1306/examples
 sudo python stats.py &
-cd /home/pi/MFRC522-python
-sudo python Read_khz3.py
+cd /home/pi/opentoni
+python led.py &
+cd /home/pi/opentoni/opentoni
+sudo python opentoni_1.py

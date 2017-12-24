@@ -1,63 +1,29 @@
 {
-    "179"   :   {
+    "145"   :   {
         "type" : "random",
-        "path" : "feuerwehrmann_sam",
-        "info" : "Feuerwehrmann Sam Hörspiele"
+        "path" : "music",
+        "info" : "Musik Zufallssong"
     },
-    "92"   :   {
-        "type" : "random",
-        "path" : "mark_foster",
-        "info" : "Mark Foster songs"
+    "166"   :   {
+        "type" : "song",
+        "path" : "drei_fragezeichen/Drei Fragezeichen {12} Und der seltsame Wecker.mp3",
+        "info" : "Die drei Fragezeichen und der seltsame Wecker"
     },
-    "100"   :   {
-        "type" : "random",
-        "path" : "findet_dorie",
-        "info" : ""
+    "214"   :   {
+        "type" : "song",
+        "path" : "drei_fragezeichen/die_drei_fragezeichen_und_das_gespensterschloss.mp3",
+        "info" : "Die drei Fragezeichen und das Gespensterschloss"
     },
-    "242"   :   {
-        "type" : "random",
-        "path" : "cars",
-        "info" : ""
+    "38"   :   {
+        "type" : "song",
+        "path" : "weihnachten/mix.mp3",
+        "info" : "Weihnachtslider zum Mitsingen, der beste mix"
     },
-    "87"   :   {
-        "type" : "random",
-        "path" : "die_drei_fragezeichen_kids",
-        "info" : ""
-    },
-    "189"   :   {
-        "type" : "random",
-        "path" : "der_kleine_vampir",
-        "info" : ""
-    },
-    "173"   :   {
-        "type" : "random",
-        "path" : "yakari",
-        "info" : ""
-    },
-    "142"   :   {
-        "type" : "random",
-        "path" : "bibi_blocksberg",
-        "info" : ""
-    },
-    "243"   :   {
-        "type" : "random",
-        "path" : "nieke",
-        "info" : "Janiekes Musik"
-    },
-    "98"   :   {
-        "type" : "random",
-        "path" : "hoerspiele",
-        "info" : "Gemischte Hörspiele"
-    },
-    "49"   :   {
-        "type" : "random",
-        "path" : "benjamin_bluemchen",
-        "info" : ""
-    },
-    "62"   :   {
-        "type" : "random",
-        "path" : "meck",
-        "info" : "Mecks songs"
+    "230"   :   {
+        "type" : "playlist",
+        "path" : "music",
+        "playlist_name" : "music",
+        "info" : "Jesses Music playlist"
     }
 
 }

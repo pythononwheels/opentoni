@@ -36,6 +36,7 @@ last_status=2
 last_rand = 1
 
 MUSICDIR="/home/pi/music/"
+PLAYLISTDIR=os.path.join(MUSICDIR, "playlists")
 
 #
 # Welcome Message
@@ -70,13 +71,13 @@ def play_random(path, last_rand):
             r = random.randint(0, len(songlist)-1)
         songnum = r
     else:
-        print "len songlist <=1"
+        #print "len songlist <=1"
         songnum = 0
     for idx,elem in enumerate(songlist):
         print str(idx) + " : " + elem
     #print str(songlist)
-    print "randonly chosen song number: " + str(songnum)
-    print " ........ " + str(songlist[songnum])
+    #print "randonly chosen song number: " + str(songnum)
+    #print " ........ " + str(songlist[songnum])
     openstr = songlist[songnum]
     #print "trying to play: " + openstr
     #if music:
@@ -98,19 +99,49 @@ while continue_reading:
         # card removed:
         status2count += 1
         if status2count > 1 and playing == True:
-            music.terminate()
+            try:
+                music.terminate()
             #music.stdin.write("STOP")
-            playing = False
-            status2count = 0
+            except:
+                pass
+            finally:
+                playing = False
+                status2count = 0
     else:
         if playing == False:
             for elem in data:
                 if uid[0] == int(elem):
-                    songpath, last_rand = play_random(data[elem]["path"], last_rand)
-                    print "last_rand:" + str(last_rand)
-                    say_songname(songpath)
-                    music = Popen(["mpg321", "-q", "-R", "opentoni"], stdin=PIPE, stdout=FNULL)
-                    music.stdin.write("LOAD " + songpath)
+                    if data[elem]["type"] == "song":
+                        say_songname(data[elem]["info"])
+                        songpath=os.path.join(MUSICDIR, data[elem]["path"])
+                        music = Popen(["mpg321", "-q", "-R", "opentoni"], stdin=PIPE, stdout=FNULL)
+                        music.stdin.write("LOAD " + songpath)
+                    elif data[elem]["type"] == "playlist":
+                        import os
+                        import glob
+
+                        dir = os.path.join(MUSICDIR,data[elem]["path"])
+                        songlist=[]
+                        plname = os.path.join(PLAYLISTDIR, data[elem]["playlist_name"] + ".m3u")
+                        print("playlist name: " + plname)
+                        print("dir: " + dir)
+                        _m3u = open( plname , "w" )
+                        for file in os.listdir(dir):
+                            filename, file_ext = os.path.splitext(file)
+                            if file_ext== ".mp3" :
+                                songlist.append(file)
+                        _m3u.close()
+                        print(str(songlist))
+                        say_songname("playlists muss der onkel erst noch programmieren")
+                        #say_songname(data[elem]["info"])
+                        #music = Popen(["mpg321", "-list", plname], stdin=PIPE, stdout=FNULL)
+                        #music.stdin.write("LOAD " + songpath)
+                    else:
+                        songpath, last_rand = play_random(data[elem]["path"], last_rand)
+                        #print "last_rand:" + str(last_rand)
+                        say_songname(songpath)
+                        music = Popen(["mpg321", "-q", "-R", "opentoni"], stdin=PIPE, stdout=FNULL)
+                        music.stdin.write("LOAD " + songpath)
         playing = True
     time.sleep(0.3)
     last_status=status
