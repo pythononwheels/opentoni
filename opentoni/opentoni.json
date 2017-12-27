@@ -1,29 +1,31 @@
 {
-    "145"   :   {
+    "setup"   :   {
+        "music_path" : "/home/pi/music/"
+    },
+    "1"   :   {
         "type" : "random",
         "path" : "music",
         "info" : "Musik Zufallssong"
     },
-    "166"   :   {
+    "2"   :   {
         "type" : "song",
-        "path" : "drei_fragezeichen/Drei Fragezeichen {12} Und der seltsame Wecker.mp3",
-        "info" : "Die drei Fragezeichen und der seltsame Wecker"
+        "path" : "subdir/song.mp3",
+        "info" : "Single song"
     },
-    "214"   :   {
+    "3"   :   {
         "type" : "song",
-        "path" : "drei_fragezeichen/die_drei_fragezeichen_und_das_gespensterschloss.mp3",
-        "info" : "Die drei Fragezeichen und das Gespensterschloss"
+        "path" : "die_wilden_kerle/Die_wilden_fussball_kerle_band_1_leon_der_slalomdribbler.mp3",
+        "info" : "Die wilden fussball kerle band 1 leon der slalomdribbler"
     },
-    "38"   :   {
-        "type" : "song",
-        "path" : "weihnachten/mix.mp3",
-        "info" : "Weihnachtslider zum Mitsingen, der beste mix"
-    },
-    "230"   :   {
+    "4"   :   {
         "type" : "playlist",
+        "path" : "playlist1.m3u",
+        "info" : "PLay a playlist"
+    },
+    "5"   :   {
+        "type" : "random_playlist",
         "path" : "music",
-        "playlist_name" : "music",
-        "info" : "Jesses Music playlist"
+        "info" : "creates a random playlist from all files in path and plays it"
     }
 
 }

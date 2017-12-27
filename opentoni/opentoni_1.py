@@ -35,21 +35,26 @@ status2count=0
 last_status=2
 last_rand = 1
 
-MUSICDIR="/home/pi/music/"
+# load the opentoni.json data
+data = json.load(open("opentoni.json"))
+MUSICDIR=data["setup"]["music_path"]
 PLAYLISTDIR=os.path.join(MUSICDIR, "playlists")
 
 #
-# Welcome Message
+# Load Messages from opentoni_messages.json
 #
 messages = json.load(open("opentoni_messages.json"))
 for elem in messages["welcome"]:
     call(["espeak", "-v", "de", elem])
 skip_intro = messages["skip_intro"]
+
+#
+# say welcome intro
+#
 if not skip_intro:
     for elem in messages["intro"]:
         call(["espeak", "-v", "de", elem])
 
-data = json.load(open("opentoni.json"))
 def get_song_from_path(songpath):
     try:
         return os.path.splitext(os.path.basename(songpath))[0]
@@ -86,62 +91,70 @@ def play_random(path, last_rand):
     #music.stdin.write("LOAD " + openstr)
     return openstr,songnum
 
-# This loop keeps checking for chips. If one is near it will get the UID and authenticate
-while continue_reading:
-    # Scan for cards
-    (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
-    #print "status: " + str(status) + "  last_status: " + str(last_status) + " status2count: " + str(status2count) 
-    # If a card is found
-    (status,uid) = MIFAREReader.MFRC522_Anticoll()
-    if status2count > 2:
-        status2count = 0
-    if status == 2 and last_status==2:
-        # card removed:
-        status2count += 1
-        if status2count > 1 and playing == True:
-            try:
-                music.terminate()
-            #music.stdin.write("STOP")
-            except:
-                pass
-            finally:
-                playing = False
-                status2count = 0
-    else:
-        if playing == False:
-            for elem in data:
-                if uid[0] == int(elem):
-                    if data[elem]["type"] == "song":
-                        say_songname(data[elem]["info"])
-                        songpath=os.path.join(MUSICDIR, data[elem]["path"])
-                        music = Popen(["mpg321", "-q", "-R", "opentoni"], stdin=PIPE, stdout=FNULL)
-                        music.stdin.write("LOAD " + songpath)
-                    elif data[elem]["type"] == "playlist":
-                        import os
-                        import glob
+def play():
+    """This loop keeps checking for chips. If one is near it will get the UID and authenticate"""
+    while continue_reading:
+        # Scan for cards
+        (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
+        #print "status: " + str(status) + "  last_status: " + str(last_status) + " status2count: " + str(status2count) 
+        # If a card is found
+        (status,uid) = MIFAREReader.MFRC522_Anticoll()
+        if status2count > 2:
+            status2count = 0
+        if status == 2 and last_status==2:
+            # card removed:
+            status2count += 1
+            if status2count > 1 and playing == True:
+                try:
+                    music.terminate()
+                #music.stdin.write("STOP")
+                except:
+                    pass
+                finally:
+                    playing = False
+                    status2count = 0
+        else:
+            if playing == False:
+                for elem in data:
+                    if uid[0] == int(elem):
+                        if data[elem]["type"] == "song":
+                            say_songname(data[elem]["info"])
+                            songpath=os.path.join(MUSICDIR, data[elem]["path"])
+                            music = Popen(["mpg321", "-q", "-R", "opentoni"], stdin=PIPE, stdout=FNULL)
+                            music.stdin.write("LOAD " + songpath)
+                        elif data[elem]["type"] == "playlist":
+                            import os
+                            import glob
 
-                        dir = os.path.join(MUSICDIR,data[elem]["path"])
-                        songlist=[]
-                        plname = os.path.join(PLAYLISTDIR, data[elem]["playlist_name"] + ".m3u")
-                        print("playlist name: " + plname)
-                        print("dir: " + dir)
-                        _m3u = open( plname , "w" )
-                        for file in os.listdir(dir):
-                            filename, file_ext = os.path.splitext(file)
-                            if file_ext== ".mp3" :
-                                songlist.append(file)
-                        _m3u.close()
-                        print(str(songlist))
-                        say_songname("playlists muss der onkel erst noch programmieren")
-                        #say_songname(data[elem]["info"])
-                        #music = Popen(["mpg321", "-list", plname], stdin=PIPE, stdout=FNULL)
-                        #music.stdin.write("LOAD " + songpath)
-                    else:
-                        songpath, last_rand = play_random(data[elem]["path"], last_rand)
-                        #print "last_rand:" + str(last_rand)
-                        say_songname(songpath)
-                        music = Popen(["mpg321", "-q", "-R", "opentoni"], stdin=PIPE, stdout=FNULL)
-                        music.stdin.write("LOAD " + songpath)
-        playing = True
-    time.sleep(0.3)
-    last_status=status
+                            dir = os.path.join(MUSICDIR,data[elem]["path"])
+                            songlist=[]
+                            plname = os.path.join(PLAYLISTDIR, data[elem]["playlist_name"] + ".m3u")
+                            print("playlist name: " + plname)
+                            print("dir: " + dir)
+                            _m3u = open( plname , "w" )
+                            for file in os.listdir(dir):
+                                filename, file_ext = os.path.splitext(file)
+                                if file_ext== ".mp3" :
+                                    songlist.append(file)
+                            _m3u.close()
+                            print(str(songlist))
+                            say_songname("playlists muss der onkel erst noch programmieren")
+                            #say_songname(data[elem]["info"])
+                            #music = Popen(["mpg321", "-list", plname], stdin=PIPE, stdout=FNULL)
+                            #music.stdin.write("LOAD " + songpath)
+                        else:
+                            songpath, last_rand = play_random(data[elem]["path"], last_rand)
+                            #print "last_rand:" + str(last_rand)
+                            try:
+                                say_songname(songpath)
+                                music = Popen(["mpg321", "-q", "-R", "opentoni"], stdin=PIPE, stdout=FNULL)
+                                music.stdin.write("LOAD " + songpath)
+                            except:
+                                say(messages["problems_playing"] + songpath)
+            playing = True
+        time.sleep(0.3)
+        last_status=status
+
+
+if __name__ == "__main__":
+    play()
