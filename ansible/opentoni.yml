@@ -1,0 +1,72 @@
+---
+- hosts: 127.0.0.1
+  tasks:
+   - name: Enable SPI
+     lineinfile:
+       dest=/boot/config.txt
+       line="dtparam=spi=on"
+       regexp="dtparam=spi=on"
+       owner=root
+       state=present
+       insertafter=EOF
+       create=True
+
+   - name: Enable SPI
+     lineinfile:
+       dest=/boot/config.txt
+       line="dtparam=i2c_arm=on"
+       regexp="dtparam=i2c_arm=on"
+       owner=root
+       state=present
+       insertafter=EOF
+       create=True
+
+   - name: Install git
+     apt: pkg=git state=installed update_cache=true
+
+   - name: Install alas utils
+     apt: pkg=alsa-utils state=installed update_cache=true
+
+   - name: Install python-dev
+     apt: pkg=python-dev state=installed update_cache=true
+
+   - name: Install python Pillow
+     apt: pkg=python-pil state=installed update_cache=true
+
+   - name: Install mpg321
+     apt: pkg=mpg321 state=installed update_cache=true
+
+   - name: clone opentoni git repository
+     git:
+       repo: 'https://github.com/pythononwheels/opentoni.git'
+       dest: /home/pi/opentoni
+       clone: yes
+       update: yes
+
+   - name: change opentoni dir user rights to pi
+     file:
+       dest: /home/pi/opentoni
+       owner: pi
+       group: pi
+       recurse: yes
+
+   - name: install Adafuit ssd1306 display driver
+     shell: "/usr/bin/python /home/pi/opentoni/Adafruit_Python_SSD1306/setup.py install"
+
+   - name: install SPI driver 
+     command: chdir=/home/pi/opentoni/SPI-Py  /usr/bin/python setup.py install
+
+   - name: setup shell convenience aliases
+     shell: alias ll='ls -l' >> /home/pi/.bashrc 
+
+   - name: set usb soundcard as default (ctl)
+     replace:
+       dest: /usr/share/alsa/alsa.conf
+       regexp: '^defaults.ctl.card 0'
+       replace: 'defaults.ctl.card 1'
+
+   - name: set usb soundcard as default (pcm)
+     replace:
+       dest: /usr/share/alsa/alsa.conf
+       regexp: '^defaults.pcm.card 0'
+       replace: 'defaults.pcm.card 1'

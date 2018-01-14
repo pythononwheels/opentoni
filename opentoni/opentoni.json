@@ -1,8 +1,6 @@
 {
-    "38"   :   {
-        "type" : "random",
-        "path" : "music",
-        "info" : "Musik Zufallssong"
+    "setup"   :   {
+        "music_path" : "/home/pi/music/"
     },
     "142"   :   {
         "type" : "random",
@@ -38,11 +36,6 @@
         "type" : "song",
         "path" : "bowie/david_bowie_greates_hits.mp3",
         "info" : "David Bowie gretest hits"
-    },
-    "70"   :   {
-        "type" : "song",
-        "path" : "drei_fragezeichen/die_drei_fragezeichen_und_das_gespensterschloss.mp3",
-        "info" : "Die drei Fragezeichen und das Gespensterschloss"
     },
     "92"   :   {
         "type" : "song",
@@ -81,12 +74,6 @@
         "type" : "song",
         "path" : "die_wilden_kerle/Die_wilden_fussball_kerle_band_1_leon_der_slalomdribbler.mp3",
         "info" : "Die wilden fussball kerle band 1 leon der slalomdribbler"
-    },
-    "999"   :   {
-        "type" : "playlist",
-        "path" : "thomas",
-        "playlist_name" : "music",
-        "info" : "Jesses Music playlist"
     }
 
 }

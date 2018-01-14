@@ -37,21 +37,26 @@ status2count=0
 last_status=2
 last_rand = 1
 
-MUSICDIR="/home/pi/music/"
+# load the opentoni.json data
+data = json.load(open("opentoni.json"))
+MUSICDIR=data["setup"]["music_path"]
 PLAYLISTDIR=os.path.join(MUSICDIR, "playlists")
 
 #
-# Welcome Message
+# Load Messages from opentoni_messages.json
 #
 messages = json.load(open("opentoni_messages.json"))
 for elem in messages["welcome"]:
     call(["espeak", "-v", "de", elem])
 skip_intro = messages["skip_intro"]
+
+#
+# say welcome intro
+#
 if not skip_intro:
     for elem in messages["intro"]:
         call(["espeak", "-v", "de", elem])
 
-data = json.load(open("opentoni.json"))
 def get_song_from_path(songpath):
     try:
         return os.path.splitext(os.path.basename(songpath))[0]
@@ -154,3 +159,4 @@ while continue_reading:
         playing = True
     time.sleep(0.3)
     last_status=status
+
