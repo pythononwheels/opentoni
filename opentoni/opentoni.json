@@ -1,79 +1,11 @@
 {
-    "setup"   :   {
+    "999"   :   {
         "music_path" : "/home/pi/music/"
     },
-    "142"   :   {
-        "type" : "random",
-        "path" : "meck",
-        "info" : "Musik Zufallssong"
-    },
-    "22"   :   {
+    "70"   :   {
         "type" : "song",
-        "path" : "drei_fragezeichen/die_drei_fragezeichen_und_die_schwarze_katze.mp3",
-        "info" : "Die drei Fragezeichen und die schwarze katze"
-    },
-    "243"   :   {
-        "type" : "song",
-        "path" : "drei_fragezeichen/die_drei_fragezeichen_und_der_seltsame_wecker.mp3",
-        "info" : "Die drei Fragezeichen und der seltsame wecker"
-    },
-    "6"   :   {
-        "type" : "song",
-        "path" : "hoerspiele/bibi_und_tina_hoerspiel_kinofilm_2.mp3",
-        "info" : "Bibi und Tina Original Hoerspiel zum kinofilm 2"
-    },
-    "102"   :   {
-        "type" : "song",
-        "path" : "hoerspiele/bibi_und_tina_hoerspiel_kinofilm.mp3",
-        "info" : "Bibi und Tina Original Hoerspiel zum kinofilm 1"
-    },
-    "179"   :   {
-        "type" : "song",
-        "path" : "foo_fighters/best_of.mp3",
-        "info" : "fu faiters best of"
-    },
-    "100"   :   {
-        "type" : "song",
-        "path" : "bowie/david_bowie_greates_hits.mp3",
-        "info" : "David Bowie gretest hits"
-    },
-    "92"   :   {
-        "type" : "song",
-        "path" : "drei_fragezeichen/der_unheimliche_drache.mp3",
-        "info" : "Die drei Fragezeichen und der unheimliche drache"
-    },
-    "214"   :   {
-        "type" : "song",
-        "path" : "thomas/thomas_und_seine_freunde.mp3",
-        "info" : "Thomas und seine Freunde, die Abenteuer der Loks"
-    },
-    "150"   :   {
-        "type" : "recursive",
-        "path" : "kati",
-        "info" : "Kati songs"
-    },
-    "242"   :   {
-        "type" : "random_playlist",
-        "path" : "bibi_und_tina_songs",
-        "name" : "bibi_und_tina_songs",
-        "info" : "Bibi und Tina zufallse Songmix"
-    },
-    "87"   :   {
-        "type" : "random_playlist",
-        "name" : "mecks_playlist_2",
-        "path" : "meck_2",
-        "info" : "Mecks playlist 2"
-    },
-    "86"   :   {
-        "type" : "random_playlist",
-        "name" : "motown_1",
-        "path" : "motown_1",
-        "info" : "Motown nummer 1 hits"
-    },
-    "173"   :   {
-        "type" : "song",
-        "path" : "die_wilden_kerle/Die_wilden_fussball_kerle_band_1_leon_der_slalomdribbler.mp3",
-        "info" : "Die wilden fussball kerle band 1 leon der slalomdribbler"
+        "path" : "drei_fragezeichen/und_die_rache_des_tigers.mp3",
+        "info" : "Die drei Fragezeichen und die Rache des Tigers"
     }
 
 }

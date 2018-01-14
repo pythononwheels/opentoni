@@ -39,7 +39,7 @@ last_rand = 1
 
 # load the opentoni.json data
 data = json.load(open("opentoni.json"))
-MUSICDIR=data["setup"]["music_path"]
+MUSICDIR=data["999"]["music_path"]
 PLAYLISTDIR=os.path.join(MUSICDIR, "playlists")
 
 #
@@ -94,12 +94,15 @@ def play_random(path, last_rand):
     return openstr,songnum
 
 # This loop keeps checking for chips. If one is near it will get the UID and authenticate
+out = None
 while continue_reading:
     # Scan for cards
     (status,TagType) = MIFAREReader.MFRC522_Request(MIFAREReader.PICC_REQIDL)
     #print "status: " + str(status) + "  last_status: " + str(last_status) + " status2count: " + str(status2count) 
     # If a card is found
     (status,uid) = MIFAREReader.MFRC522_Anticoll()
+    if out:
+        print "out: " +str(out.read())
     if status2count > 2:
         status2count = 0
     if status == 2 and last_status==2:
@@ -156,6 +159,8 @@ while continue_reading:
                         say_songname(songpath)
                         music = Popen(["mpg321", "-q", "-R", "opentoni"], stdin=PIPE, stdout=FNULL)
                         music.stdin.write("LOAD " + songpath)
+        else:
+            print "out: "+ str(out)
         playing = True
     time.sleep(0.3)
     last_status=status

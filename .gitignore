@@ -2,6 +2,7 @@
 opentoni.json
 opentoni_messages.json
 unicodetest.py
+opentoni.retry
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
