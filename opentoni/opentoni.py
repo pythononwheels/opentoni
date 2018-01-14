@@ -70,13 +70,13 @@ def play_random(path, last_rand):
             r = random.randint(0, len(songlist)-1)
         songnum = r
     else:
-        print "len songlist <=1"
+        #print "len songlist <=1"
         songnum = 0
     for idx,elem in enumerate(songlist):
         print str(idx) + " : " + elem
     #print str(songlist)
-    print "randonly chosen song number: " + str(songnum)
-    print " ........ " + str(songlist[songnum])
+    #print "randonly chosen song number: " + str(songnum)
+    #print " ........ " + str(songlist[songnum])
     openstr = songlist[songnum]
     #print "trying to play: " + openstr
     #if music:
@@ -107,7 +107,7 @@ while continue_reading:
             for elem in data:
                 if uid[0] == int(elem):
                     songpath, last_rand = play_random(data[elem]["path"], last_rand)
-                    print "last_rand:" + str(last_rand)
+                    #print "last_rand:" + str(last_rand)
                     say_songname(songpath)
                     music = Popen(["mpg321", "-q", "-R", "opentoni"], stdin=PIPE, stdout=FNULL)
                     music.stdin.write("LOAD " + songpath)

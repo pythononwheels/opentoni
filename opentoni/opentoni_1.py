@@ -8,6 +8,8 @@ import os, time
 from subprocess import Popen, PIPE, STDOUT, call
 import random
 import json
+import codecs
+from random import shuffle
 
 continue_reading = True
 FNULL=FNULL = open(os.devnull, 'w')
@@ -116,26 +118,33 @@ while continue_reading:
                         songpath=os.path.join(MUSICDIR, data[elem]["path"])
                         music = Popen(["mpg321", "-q", "-R", "opentoni"], stdin=PIPE, stdout=FNULL)
                         music.stdin.write("LOAD " + songpath)
-                    elif data[elem]["type"] == "playlist":
+                    elif data[elem]["type"] == "random_playlist":
                         import os
                         import glob
-
                         dir = os.path.join(MUSICDIR,data[elem]["path"])
+                        plname=os.path.join(PLAYLISTDIR, data[elem]["name"] +  ".m3u") 
                         songlist=[]
-                        plname = os.path.join(PLAYLISTDIR, data[elem]["playlist_name"] + ".m3u")
-                        print("playlist name: " + plname)
-                        print("dir: " + dir)
-                        _m3u = open( plname , "w" )
+                        _m3u = codecs.open( plname , "w", encoding="utf-8" )
                         for file in os.listdir(dir):
                             filename, file_ext = os.path.splitext(file)
                             if file_ext== ".mp3" :
                                 songlist.append(file)
+                        shuffle(songlist)
+                        say_songname(data[elem]["info"])
+
+                        for s in songlist:
+                            _m3u.write(os.path.join(dir,s) + os.linesep)
                         _m3u.close()
-                        print(str(songlist))
-                        say_songname("playlists muss der onkel erst noch programmieren")
+                        #print("now playing:" + plname)
+                        #say_songname("playlists muss der onkel erst noch programmieren")
                         #say_songname(data[elem]["info"])
-                        #music = Popen(["mpg321", "-list", plname], stdin=PIPE, stdout=FNULL)
+                        music = Popen(["mpg321", "--list", plname], stdin=PIPE, stdout=FNULL)
                         #music.stdin.write("LOAD " + songpath)
+                    elif data[elem]["type"] == "recursive":
+                        say_songname(data[elem]["info"])
+                        songpath = os.path.join(MUSICDIR, data[elem]["path"])
+                        #print "last_rand:" + str(last_rand)
+                        music = Popen(["mpg321", "-q", "-B", songpath], stdin=PIPE, stdout=FNULL)
                     else:
                         songpath, last_rand = play_random(data[elem]["path"], last_rand)
                         #print "last_rand:" + str(last_rand)
